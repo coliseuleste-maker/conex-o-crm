@@ -11,6 +11,7 @@ import LeadsPage from "@/pages/LeadsPage";
 import KanbanPage from "@/pages/KanbanPage";
 import ReportsPage from "@/pages/ReportsPage";
 import CommissionsPage from "@/pages/CommissionsPage";
+import CompanyDetailPage from "@/pages/CompanyDetailPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ const App = () => (
             <Routes>
               <Route path="/" element={<DashboardPage />} />
               <Route path="/empresas" element={<CompaniesPage />} />
+              <Route path="/empresas/:id" element={<CompanyDetailPage />} />
               <Route path="/leads" element={<LeadsPage />} />
               <Route path="/kanban" element={<KanbanPage />} />
               <Route path="/relatorios" element={<ReportsPage />} />
