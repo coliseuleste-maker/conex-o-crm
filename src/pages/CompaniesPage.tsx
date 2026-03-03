@@ -2,16 +2,18 @@ import { useCRM } from "@/contexts/CRMContext";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Building2, Plus } from "lucide-react";
+import { Building2, Plus, ChevronRight } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Company } from "@/types/crm";
 
 export default function CompaniesPage() {
   const { companies, addCompany, leads } = useCRM();
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState<{ name: string; cnpj: string; responsible: string; commissionRate: string; segment: string; status: "active" | "inactive" }>({ name: "", cnpj: "", responsible: "", commissionRate: "", segment: "", status: "active" });
 
@@ -75,7 +77,7 @@ export default function CompaniesPage() {
           const commission = (closedValue * c.commissionRate) / 100;
 
           return (
-            <Card key={c.id} className="hover:shadow-md transition-shadow">
+            <Card key={c.id} className="hover:shadow-md transition-shadow cursor-pointer group" onClick={() => navigate(`/empresas/${c.id}`)}>
               <CardContent className="p-5">
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-2">
@@ -109,6 +111,10 @@ export default function CompaniesPage() {
                     <p className="text-xs font-bold text-accent">{new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL", notation: "compact" }).format(commission)}</p>
                     <p className="text-[10px] text-muted-foreground">Comissão</p>
                   </div>
+                </div>
+                <div className="mt-3 pt-3 border-t flex items-center justify-center gap-1 text-xs text-muted-foreground group-hover:text-primary transition-colors">
+                  <span>Ver painel completo</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
                 </div>
               </CardContent>
             </Card>
