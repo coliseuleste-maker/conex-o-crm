@@ -9,12 +9,14 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Plus, Search } from "lucide-react";
 import { useState, useMemo } from "react";
-import { formatCurrency, statusLabels } from "@/lib/format";
+import { formatCurrency, statusLabels, qualificationLabels } from "@/lib/format";
 import { Lead, LeadStatus } from "@/types/crm";
 
 const statusColors: Record<LeadStatus, string> = {
   received: "bg-muted text-muted-foreground",
   first_contact: "bg-accent/20 text-accent",
+  qualified: "bg-success/20 text-success",
+  unqualified: "bg-destructive/20 text-destructive",
   proposal_sent: "bg-warning/20 text-warning",
   negotiation: "bg-primary/20 text-primary",
   closed: "bg-success/20 text-success",
@@ -54,8 +56,12 @@ export default function LeadsPage() {
       responsible: form.responsible,
       potentialValue: Number(form.potentialValue) || 0,
       status: "received",
+      qualification: "pending",
+      score: 50,
       entryDate: new Date().toISOString().split("T")[0],
       notes: form.notes,
+      activities: [],
+      contactAttempts: 0,
     });
     setForm({ name: "", phone: "", email: "", origin: "", companyId: "", responsible: "", potentialValue: "", notes: "" });
     setOpen(false);
@@ -126,6 +132,7 @@ export default function LeadsPage() {
               <TableHead>Origem</TableHead>
               <TableHead>Responsável</TableHead>
               <TableHead>Valor</TableHead>
+              <TableHead>Score</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Data</TableHead>
             </TableRow>
@@ -145,6 +152,11 @@ export default function LeadsPage() {
                   <TableCell className="text-sm">{l.origin}</TableCell>
                   <TableCell className="text-sm">{l.responsible}</TableCell>
                   <TableCell className="text-sm font-medium">{formatCurrency(l.potentialValue)}</TableCell>
+                  <TableCell>
+                    <span className={`text-sm font-medium ${l.score >= 80 ? "text-success" : l.score >= 50 ? "text-warning" : "text-destructive"}`}>
+                      {l.score}
+                    </span>
+                  </TableCell>
                   <TableCell>
                     <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-medium ${statusColors[l.status]}`}>
                       {statusLabels[l.status]}
