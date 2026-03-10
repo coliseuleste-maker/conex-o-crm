@@ -12,6 +12,10 @@ import KanbanPage from "@/pages/KanbanPage";
 import ReportsPage from "@/pages/ReportsPage";
 import CommissionsPage from "@/pages/CommissionsPage";
 import CompanyDetailPage from "@/pages/CompanyDetailPage";
+import TeamPage from "@/pages/TeamPage";
+import ProspectingPage from "@/pages/ProspectingPage";
+import AIAgentPage from "@/pages/AIAgentPage";
+import AutomationPage from "@/pages/AutomationPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +34,10 @@ const App = () => (
               <Route path="/empresas/:id" element={<CompanyDetailPage />} />
               <Route path="/leads" element={<LeadsPage />} />
               <Route path="/kanban" element={<KanbanPage />} />
+              <Route path="/equipe" element={<TeamPage />} />
+              <Route path="/prospeccao" element={<ProspectingPage />} />
+              <Route path="/agentes-ia" element={<AIAgentPage />} />
+              <Route path="/automacao" element={<AutomationPage />} />
               <Route path="/relatorios" element={<ReportsPage />} />
               <Route path="/comissoes" element={<CommissionsPage />} />
               <Route path="*" element={<NotFound />} />
