@@ -17,6 +17,7 @@ import ProspectingPage from "@/pages/ProspectingPage";
 import AIAgentPage from "@/pages/AIAgentPage";
 import AutomationPage from "@/pages/AutomationPage";
 import InternationalPage from "@/pages/InternationalPage";
+import LeadAcquisitionPage from "@/pages/LeadAcquisitionPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
