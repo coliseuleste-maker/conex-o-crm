@@ -17,6 +17,7 @@ const navItems = [
   { to: "/prospeccao", icon: Search, label: "Prospecção" },
   { to: "/agentes-ia", icon: Bot, label: "Agentes de IA" },
   { to: "/automacao", icon: Workflow, label: "Automação" },
+  { to: "/internacional", icon: Globe, label: "Internacional" },
   { to: "/relatorios", icon: BarChart3, label: "Relatórios" },
   { to: "/comissoes", icon: DollarSign, label: "Comissões" },
 ];
