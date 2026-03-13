@@ -1,4 +1,4 @@
-import { Company, Lead, KanbanStage, User, ProspectCompany, AIAgent, AutomationSequence, SalesGoal } from "@/types/crm";
+import { Company, Lead, KanbanStage, User, ProspectCompany, AIAgent, AutomationSequence, SalesGoal, LeadSource, LeadAutomationFlow } from "@/types/crm";
 
 export const KANBAN_STAGES: KanbanStage[] = [
   { id: "received", label: "Lead Recebido", color: "hsl(215, 20%, 65%)" },
