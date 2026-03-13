@@ -183,11 +183,3 @@ export interface SalesGoal {
   achievedValue: number;
   achievedLeads: number;
 }
-  id: string;
-  userId: string;
-  month: string;
-  targetValue: number;
-  targetLeads: number;
-  achievedValue: number;
-  achievedLeads: number;
-}
