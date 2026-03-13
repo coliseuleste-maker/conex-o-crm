@@ -1,7 +1,7 @@
 import { NavLink, useLocation } from "react-router-dom";
 import {
   LayoutDashboard, Building2, Users, KanbanSquare, BarChart3, DollarSign,
-  ChevronLeft, ChevronRight, Zap, UserCog, Search, Bot, Workflow, Globe,
+  ChevronLeft, ChevronRight, Zap, UserCog, Search, Bot, Workflow, Globe, Megaphone,
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -14,6 +14,7 @@ const navItems = [
   { to: "/leads", icon: Users, label: "Leads" },
   { to: "/kanban", icon: KanbanSquare, label: "Kanban" },
   { to: "/equipe", icon: UserCog, label: "Equipe Comercial" },
+  { to: "/aquisicao", icon: Megaphone, label: "Aquisição de Leads" },
   { to: "/prospeccao", icon: Search, label: "Prospecção" },
   { to: "/agentes-ia", icon: Bot, label: "Agentes de IA" },
   { to: "/automacao", icon: Workflow, label: "Automação" },
