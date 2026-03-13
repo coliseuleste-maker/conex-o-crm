@@ -87,3 +87,32 @@ export const mockSalesGoals: SalesGoal[] = [
   { id: "g3", userId: "u4", month: "2025-12", targetValue: 0, targetLeads: 30, achievedValue: 0, achievedLeads: 18 },
   { id: "g4", userId: "u5", month: "2025-12", targetValue: 0, targetLeads: 25, achievedValue: 0, achievedLeads: 15 },
 ];
+
+export const mockLeadSources: LeadSource[] = [
+  { id: "ls1", name: "Formulário do Site Principal", channelType: "form", active: true, companyId: "c1", responsibleId: "u4", initialStage: "received", leadsGenerated: 128, conversionRate: 35 },
+  { id: "ls2", name: "Landing Page - Campanha Verão", channelType: "landing_page", active: true, companyId: "c1", responsibleId: "u5", initialStage: "received", leadsGenerated: 85, conversionRate: 42 },
+  { id: "ls3", name: "Meta Ads - Remarketing", channelType: "meta_ads", active: true, companyId: "c2", responsibleId: "u4", initialStage: "received", leadsGenerated: 210, conversionRate: 28 },
+  { id: "ls4", name: "Google Ads - Pesquisa", channelType: "google_ads", active: true, companyId: "c2", responsibleId: "u5", initialStage: "received", leadsGenerated: 175, conversionRate: 31 },
+  { id: "ls5", name: "WhatsApp Business", channelType: "whatsapp", active: true, companyId: "c1", responsibleId: "u4", initialStage: "received", leadsGenerated: 92, conversionRate: 55 },
+  { id: "ls6", name: "Email Marketing", channelType: "email", active: false, companyId: "c3", responsibleId: "u5", initialStage: "received", leadsGenerated: 45, conversionRate: 18 },
+  { id: "ls7", name: "API - Parceiros", channelType: "api", active: true, companyId: "c3", responsibleId: "u4", initialStage: "received", leadsGenerated: 60, conversionRate: 40 },
+  { id: "ls8", name: "Upload de Planilhas", channelType: "spreadsheet", active: true, companyId: "c4", responsibleId: "u5", initialStage: "received", leadsGenerated: 30, conversionRate: 22 },
+];
+
+export const mockLeadAutomationFlows: LeadAutomationFlow[] = [
+  { id: "af1", name: "Boas-vindas + Qualificação", active: true, leadsProcessed: 320, conversionRate: 45, steps: [
+    { id: "afs1", order: 1, type: "welcome", content: "Olá! Obrigado pelo interesse. Sou o assistente da Conexão Comercial.", delayMinutes: 0 },
+    { id: "afs2", order: 2, type: "qualification", content: "Para melhor atendê-lo, qual o porte da sua empresa?", delayMinutes: 2 },
+    { id: "afs3", order: 3, type: "question", content: "Qual o principal desafio comercial que você enfrenta hoje?", delayMinutes: 5 },
+    { id: "afs4", order: 4, type: "schedule", content: "Gostaria de agendar uma reunião com nosso especialista?", delayMinutes: 10 },
+  ]},
+  { id: "af2", name: "Follow-up Rápido", active: true, leadsProcessed: 150, conversionRate: 38, steps: [
+    { id: "afs5", order: 1, type: "welcome", content: "Oi! Vi que você demonstrou interesse em nossos serviços.", delayMinutes: 0 },
+    { id: "afs6", order: 2, type: "schedule", content: "Posso agendar uma conversa rápida de 15 minutos?", delayMinutes: 3 },
+  ]},
+  { id: "af3", name: "Reengajamento", active: false, leadsProcessed: 80, conversionRate: 22, steps: [
+    { id: "afs7", order: 1, type: "welcome", content: "Olá novamente! Notamos que faz um tempo que conversamos.", delayMinutes: 0 },
+    { id: "afs8", order: 2, type: "question", content: "Houve alguma mudança no cenário da sua empresa?", delayMinutes: 5 },
+    { id: "afs9", order: 3, type: "schedule", content: "Temos novidades que podem interessar. Quer agendar um bate-papo?", delayMinutes: 15 },
+  ]},
+];

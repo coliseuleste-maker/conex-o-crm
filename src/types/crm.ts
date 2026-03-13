@@ -141,8 +141,48 @@ export interface AutomationStep {
   delayDays: number;
 }
 
+// Lead Acquisition types
+export type LeadChannelType = "form" | "landing_page" | "meta_ads" | "google_ads" | "whatsapp" | "email" | "api" | "spreadsheet";
+
+export interface LeadSource {
+  id: string;
+  name: string;
+  channelType: LeadChannelType;
+  active: boolean;
+  companyId: string;
+  responsibleId: string;
+  initialStage: LeadStatus;
+  leadsGenerated: number;
+  conversionRate: number;
+}
+
+export interface LeadAutomationFlow {
+  id: string;
+  name: string;
+  active: boolean;
+  steps: AutomationFlowStep[];
+  leadsProcessed: number;
+  conversionRate: number;
+}
+
+export interface AutomationFlowStep {
+  id: string;
+  order: number;
+  type: "welcome" | "qualification" | "question" | "schedule";
+  content: string;
+  delayMinutes: number;
+}
+
 // Sales Goals
 export interface SalesGoal {
+  id: string;
+  userId: string;
+  month: string;
+  targetValue: number;
+  targetLeads: number;
+  achievedValue: number;
+  achievedLeads: number;
+}
   id: string;
   userId: string;
   month: string;
