@@ -105,19 +105,55 @@ export interface ProspectingFilter {
   faturamentoMax: number;
 }
 
-// AI Agent types
+// AI Agent types (company-centric)
+export type AgentObjective = "sales" | "qualification" | "support" | "follow_up" | "sdr";
+export type AgentTone = "formal" | "consultive" | "aggressive" | "friendly";
+
 export interface AIAgent {
   id: string;
-  userId: string;
+  companyId: string;
   name: string;
   status: "active" | "training" | "inactive";
+  objective: AgentObjective;
+  tone: AgentTone;
+  segment: string;
+  product: string;
   knowledgeBase: string[];
   communicationStyle: string;
   commercialStrategy: string;
   totalInteractions: number;
   successRate: number;
+  responseRate: number;
+  conversionRate: number;
   lastTraining?: string;
   capabilities: string[];
+  trainingData?: AgentTrainingData;
+}
+
+export interface AgentTrainingData {
+  companyDescription: string;
+  productsServices: string;
+  targetAudience: string;
+  salesScripts: string;
+  faq: string;
+  commonObjections: string;
+  commercialMaterials: string;
+}
+
+// Prospect list types
+export interface ProspectList {
+  id: string;
+  name: string;
+  createdAt: string;
+  prospectIds: string[];
+}
+
+export interface ProspectSearchHistory {
+  id: string;
+  query: string;
+  filters: Record<string, string>;
+  resultsCount: number;
+  searchedAt: string;
 }
 
 // Automation types
