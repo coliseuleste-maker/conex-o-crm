@@ -1,7 +1,7 @@
 import { NavLink, useLocation } from "react-router-dom";
 import {
   LayoutDashboard, Building2, Users, KanbanSquare, BarChart3, DollarSign,
-  ChevronLeft, ChevronRight, Zap, UserCog, Search, Bot, Workflow, Globe, Megaphone,
+  ChevronLeft, ChevronRight, Zap, UserCog, Search, Bot, Workflow, Globe, Megaphone, Settings,
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
