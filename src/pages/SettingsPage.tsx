@@ -88,7 +88,7 @@ export default function SettingsPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <CardTitle className="text-base flex items-center gap-2">
-                    <Globe className="w-5 h-5 text-accent" />
+                    <Globe className="w-5 h-5 text-primary" />
                     Casa dos Dados API v5
                     <StatusIcon status={casaStatus} />
                   </CardTitle>
