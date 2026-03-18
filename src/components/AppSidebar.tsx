@@ -21,6 +21,7 @@ const navItems = [
   { to: "/internacional", icon: Globe, label: "Internacional" },
   { to: "/relatorios", icon: BarChart3, label: "Relatórios" },
   { to: "/comissoes", icon: DollarSign, label: "Comissões" },
+  { to: "/configuracoes", icon: Settings, label: "Configurações" },
 ];
 
 export default function AppSidebar() {

@@ -45,6 +45,7 @@ const App = () => (
               <Route path="/internacional" element={<InternationalPage />} />
               <Route path="/relatorios" element={<ReportsPage />} />
               <Route path="/comissoes" element={<CommissionsPage />} />
+              <Route path="/configuracoes" element={<SettingsPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </AppLayout>

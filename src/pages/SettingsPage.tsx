@@ -155,7 +155,7 @@ export default function SettingsPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <CardTitle className="text-base flex items-center gap-2">
-                    <BarChart3 className="w-5 h-5 text-blue-500" />
+                    <BarChart3 className="w-5 h-5 text-primary" />
                     Meta Marketing API v25.0
                     <StatusIcon status={metaStatus} />
                   </CardTitle>
