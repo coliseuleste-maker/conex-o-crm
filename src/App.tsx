@@ -18,6 +18,7 @@ import AIAgentPage from "@/pages/AIAgentPage";
 import AutomationPage from "@/pages/AutomationPage";
 import InternationalPage from "@/pages/InternationalPage";
 import LeadAcquisitionPage from "@/pages/LeadAcquisitionPage";
+import SettingsPage from "@/pages/SettingsPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -44,6 +45,7 @@ const App = () => (
               <Route path="/internacional" element={<InternationalPage />} />
               <Route path="/relatorios" element={<ReportsPage />} />
               <Route path="/comissoes" element={<CommissionsPage />} />
+              <Route path="/configuracoes" element={<SettingsPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </AppLayout>
