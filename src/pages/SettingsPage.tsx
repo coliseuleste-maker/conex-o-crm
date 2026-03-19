@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,7 +6,8 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { Key, Globe, BarChart3, CheckCircle2, AlertCircle, Loader2, ExternalLink, Shield } from "lucide-react";
+import { Key, Globe, BarChart3, CheckCircle2, AlertCircle, Loader2, ExternalLink, Shield, Save } from "lucide-react";
+import { apiSettingsService } from "@/services/apiSettings";
 import { casaDosDodsService } from "@/services/casaDosDoados";
 
 export default function SettingsPage() {
@@ -14,19 +15,54 @@ export default function SettingsPage() {
   const [metaToken, setMetaToken] = useState("");
   const [metaAdAccount, setMetaAdAccount] = useState("");
   const [testingCasa, setTestingCasa] = useState(false);
+  const [savingCasa, setSavingCasa] = useState(false);
   const [testingMeta, setTestingMeta] = useState(false);
   const [casaStatus, setCasaStatus] = useState<"idle" | "ok" | "error">("idle");
   const [metaStatus, setMetaStatus] = useState<"idle" | "ok" | "error">("idle");
   const [casaBalance, setCasaBalance] = useState<number | null>(null);
+  const [casaKeyExists, setCasaKeyExists] = useState(false);
+  const [casaKeyUpdatedAt, setCasaKeyUpdatedAt] = useState<string | null>(null);
+
+  useEffect(() => {
+    apiSettingsService.getKeyStatus('CASA_DOS_DADOS_API_KEY').then((res) => {
+      setCasaKeyExists(res.exists);
+      setCasaKeyUpdatedAt(res.updated_at);
+      if (res.exists) setCasaStatus("ok");
+    }).catch(() => {});
+  }, []);
+
+  const saveCasaDosDodsKey = async () => {
+    if (!casaDosDodsKey.trim()) {
+      toast.error("Insira a chave da API");
+      return;
+    }
+    setSavingCasa(true);
+    try {
+      await apiSettingsService.saveKey('CASA_DOS_DADOS_API_KEY', casaDosDodsKey.trim());
+      setCasaKeyExists(true);
+      setCasaKeyUpdatedAt(new Date().toISOString());
+      setCasaDosDodsKey("");
+      toast.success("Chave salva com sucesso! Teste a conexão para confirmar.");
+    } catch (err: any) {
+      toast.error(err.message || "Erro ao salvar chave");
+    } finally {
+      setSavingCasa(false);
+    }
+  };
 
   const testCasaDosDodsConnection = async () => {
     setTestingCasa(true);
     setCasaStatus("idle");
     try {
-      const result = await casaDosDodsService.getBalance();
-      setCasaBalance(result.saldo);
-      setCasaStatus("ok");
-      toast.success(`Conexão OK! Saldo: ${result.saldo} consultas`);
+      const result = await apiSettingsService.testKey('CASA_DOS_DADOS_API_KEY');
+      if (result.success) {
+        setCasaBalance(result.balance?.saldo ?? null);
+        setCasaStatus("ok");
+        toast.success(`Conexão OK! ${result.balance?.saldo != null ? `Saldo: ${result.balance.saldo} consultas` : ''}`);
+      } else {
+        setCasaStatus("error");
+        toast.error(result.error || "Erro ao conectar");
+      }
     } catch (err: any) {
       setCasaStatus("error");
       toast.error(err.message || "Erro ao conectar com Casa dos Dados");
@@ -39,7 +75,6 @@ export default function SettingsPage() {
     setTestingMeta(true);
     setMetaStatus("idle");
     try {
-      // A simple test - try listing campaigns
       toast.info("Para testar a conexão Meta, configure o token nas variáveis de ambiente do backend.");
       setMetaStatus("ok");
     } catch (err: any) {
@@ -69,8 +104,8 @@ export default function SettingsPage() {
           <div>
             <p className="text-sm font-medium text-foreground">Suas chaves são armazenadas com segurança</p>
             <p className="text-xs text-muted-foreground">
-              As chaves de API são armazenadas como secrets no backend e nunca expostas no client-side.
-              As chamadas às APIs externas são processadas por edge functions seguras.
+              As chaves de API são armazenadas de forma criptografada no backend e nunca expostas no client-side.
+              Configure sua chave abaixo e teste a conexão.
             </p>
           </div>
         </CardContent>
@@ -94,11 +129,18 @@ export default function SettingsPage() {
                   </CardTitle>
                   <CardDescription>Pesquisa avançada de CNPJs, consulta de saldo e enriquecimento de dados</CardDescription>
                 </div>
-                {casaBalance !== null && (
-                  <Badge variant="outline" className="text-xs">
-                    Saldo: {casaBalance} consultas
-                  </Badge>
-                )}
+                <div className="flex items-center gap-2">
+                  {casaKeyExists && (
+                    <Badge variant="outline" className="text-xs border-emerald-500/30 text-emerald-600">
+                      <CheckCircle2 className="w-3 h-3 mr-1" />Configurada
+                    </Badge>
+                  )}
+                  {casaBalance !== null && (
+                    <Badge variant="outline" className="text-xs">
+                      Saldo: {casaBalance} consultas
+                    </Badge>
+                  )}
+                </div>
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -108,14 +150,20 @@ export default function SettingsPage() {
                   <Input
                     id="casa-key"
                     type="password"
-                    placeholder="Insira sua chave da Casa dos Dados..."
+                    placeholder={casaKeyExists ? "••••••••• (chave já configurada, insira para atualizar)" : "Insira sua chave da Casa dos Dados..."}
                     value={casaDosDodsKey}
                     onChange={(e) => setCasaDosDodsKey(e.target.value)}
                   />
+                  <Button onClick={saveCasaDosDodsKey} disabled={savingCasa || !casaDosDodsKey.trim()}>
+                    {savingCasa ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4 mr-1" />}
+                    Salvar
+                  </Button>
                 </div>
-                <p className="text-xs text-muted-foreground">
-                  A chave deve ser configurada como secret <code className="text-xs bg-muted px-1 rounded">CASA_DOS_DADOS_API_KEY</code> no painel do Lovable Cloud.
-                </p>
+                {casaKeyUpdatedAt && (
+                  <p className="text-xs text-muted-foreground">
+                    Última atualização: {new Date(casaKeyUpdatedAt).toLocaleString("pt-BR")}
+                  </p>
+                )}
               </div>
 
               <div className="space-y-2">
@@ -137,7 +185,7 @@ export default function SettingsPage() {
               </div>
 
               <div className="flex gap-2">
-                <Button onClick={testCasaDosDodsConnection} disabled={testingCasa}>
+                <Button onClick={testCasaDosDodsConnection} disabled={testingCasa} variant={casaKeyExists ? "default" : "secondary"}>
                   {testingCasa ? <Loader2 className="w-4 h-4 mr-1 animate-spin" /> : <Key className="w-4 h-4 mr-1" />}
                   Testar Conexão
                 </Button>

@@ -3,5 +3,8 @@ project_id = "iogzyghrqeimvvtbpqkx"
 [functions.casa-dos-dados]
 verify_jwt = false
 
+[functions.manage-api-keys]
+verify_jwt = false
+
 [functions.meta-marketing]
 verify_jwt = false

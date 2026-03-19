@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -8,14 +9,35 @@ const corsHeaders = {
 const CASA_DOS_DADOS_BASE_V5 = "https://api.casadosdados.com.br/v5";
 const CASA_DOS_DADOS_BASE_V4 = "https://api.casadosdados.com.br/v4";
 
+async function getApiKey(): Promise<string | null> {
+  // Try database first
+  try {
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabase = createClient(supabaseUrl, serviceRoleKey);
+    
+    const { data } = await supabase.from('api_settings')
+      .select('key_value')
+      .eq('key_name', 'CASA_DOS_DADOS_API_KEY')
+      .maybeSingle();
+    
+    if (data?.key_value) return data.key_value;
+  } catch (e) {
+    console.error('Error reading from api_settings:', e);
+  }
+  
+  // Fallback to env var
+  return Deno.env.get('CASA_DOS_DADOS_API_KEY') || null;
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const CASA_DOS_DADOS_API_KEY = Deno.env.get('CASA_DOS_DADOS_API_KEY');
-    if (!CASA_DOS_DADOS_API_KEY) {
+    const apiKey = await getApiKey();
+    if (!apiKey) {
       return new Response(
         JSON.stringify({ error: 'Chave da API Casa dos Dados não configurada. Adicione-a nas Configurações.' }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -26,7 +48,7 @@ serve(async (req) => {
     const action = url.searchParams.get('action');
 
     const headers = {
-      'api-key': CASA_DOS_DADOS_API_KEY,
+      'api-key': apiKey,
       'Content-Type': 'application/json',
     };
 
