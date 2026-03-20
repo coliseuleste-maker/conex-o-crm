@@ -21,10 +21,12 @@ export const mockUsers: User[] = [
 ];
 
 export const mockCompanies: Company[] = [
-  { id: "c1", name: "Next", cnpj: "12.345.678/0001-90", responsible: "Carlos Silva", commissionRate: 10, segment: "Tecnologia", status: "active" },
-  { id: "c2", name: "Amarelo Ouro", cnpj: "98.765.432/0001-10", responsible: "Ana Souza", commissionRate: 8, segment: "Marketing", status: "active" },
-  { id: "c3", name: "Coliseu Hub", cnpj: "11.222.333/0001-44", responsible: "Carlos Silva", commissionRate: 12, segment: "Coworking", status: "active" },
-  { id: "c4", name: "Método X", cnpj: "55.666.777/0001-88", responsible: "Ana Souza", commissionRate: 9, segment: "Educação", status: "active" },
+  { id: "c1", name: "EmpreElas", cnpj: "12.345.678/0001-90", responsible: "Carlos Silva", commissionRate: 10, segment: "Tecnologia", status: "active" },
+  { id: "c2", name: "Revenda", cnpj: "98.765.432/0001-10", responsible: "Ana Souza", commissionRate: 8, segment: "Marketing", status: "active" },
+  { id: "c3", name: "Estoque 2", cnpj: "11.222.333/0001-44", responsible: "Carlos Silva", commissionRate: 12, segment: "Coworking", status: "active" },
+  { id: "c4", name: "Zap IA", cnpj: "55.666.777/0001-88", responsible: "Ana Souza", commissionRate: 9, segment: "Educação", status: "active" },
+  { id: "c5", name: "Feira Digital", cnpj: "22.333.444/0001-55", responsible: "Carlos Silva", commissionRate: 10, segment: "E-commerce", status: "active" },
+  { id: "c6", name: "Ferramentas IA", cnpj: "33.444.555/0001-66", responsible: "Ana Souza", commissionRate: 11, segment: "Inteligência Artificial", status: "active" },
 ];
 
 export const mockLeads: Lead[] = [
